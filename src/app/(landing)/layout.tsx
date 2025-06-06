@@ -1,3 +1,4 @@
+import Footer from "./footer";
 import Navbar from "./navbar";
 
 
@@ -9,6 +10,7 @@ export default function LandingLayout({
         <main>
             <Navbar/>
             {children}
+            <Footer/>
         </main>
     )
 }

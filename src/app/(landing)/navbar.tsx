@@ -97,7 +97,9 @@ export default function Navbar() {
     return (
         <header className="shadow-md">
             <div className="flex justify-between items-center py-[18.5px] container">
-                <h1 className="text-2xl font-bold text-primary">FITLOG</h1>
+                <Link href="/">
+                    <h1 className="text-2xl font-bold text-primary">FITLOG</h1>
+                </Link>
 
                 <div className="hidden lg:flex gap-6">
                     {navbarItems.map((item, index) => (
