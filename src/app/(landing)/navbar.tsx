@@ -1,8 +1,13 @@
 "use client";
+import { Menu } from "lucide-react";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from "~/components/ui/sheet";
+import { api } from "~/trpc/react";
 
 
 const SCROLL_OFFSET = -48;
@@ -52,12 +57,12 @@ const useScrollToElement = () => {
 	return onScroll;
 };
 
-type navbarT = {
+type NavbarT = {
     name: string,
     id: string,
 }
 
-const navbarItems: navbarT[] = [
+const navbarItems: NavbarT[] = [
     {
         name: "Преимущества",
         id: "advantages",
@@ -79,7 +84,7 @@ const navbarItems: navbarT[] = [
 function NavbarItem({
     item
 } : {
-    item: navbarT
+    item: NavbarT
 }) {
     const onScroll = useScrollToElement();
 
@@ -92,7 +97,52 @@ function NavbarItem({
     )
 }
 
+function MobileNavbar({
+    session
+} : {
+    session: Session
+}) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger className="lg:hidden">
+                <Menu className="size-6 text-primary"/>
+            </SheetTrigger>
+            <SheetContent className="flex gap-4 flex-col">
+                <SheetHeader className="flex flex-row justify-between">
+                    <h1 className="text-2xl font-bold text-primary">FITLOG</h1>
+                </SheetHeader>
+                <div className="grow flex flex-col gap-6 items-center">
+                    {navbarItems.map((item, index) => (
+                        <NavbarItem key={index} item={item}/>
+                    ))}
+                </div>
+
+                <SheetFooter>
+                    {session?.user ? (
+                        <Link href="/logout">
+                            <Button>
+                                Выход
+                            </Button>
+                        </Link>
+                    ) : (
+                        <Link href="/login">
+                            <Button>
+                                Вход
+                            </Button>
+                        </Link>
+                    )}
+
+                </SheetFooter>
+            </SheetContent>
+        </Sheet>
+    )
+}
+
 export default function Navbar() {
+
+    const { data: session } = api.user.session.useQuery();
 
     return (
         <header className="shadow-md">
@@ -107,11 +157,23 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                <Link href="/login" className="hidden lg:block">
-                    <Button>
-                        Вход
-                    </Button>
-                </Link>
+                <div className="hidden lg:block">
+                    {session?.session?.user ? (
+                        <Link href="/logout">
+                            <Button>
+                                Выход
+                            </Button>
+                        </Link>
+                    ) : (
+                        <Link href="/login">
+                            <Button>
+                                Вход
+                            </Button>
+                        </Link>
+                    )}
+                </div>
+
+                <MobileNavbar session={session?.session!} />
             </div>
         </header>
     )

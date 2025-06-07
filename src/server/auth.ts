@@ -27,12 +27,11 @@ async function GetUser(data: { email: string }) {
 				name: true,
 				password: true,
 				role: true,
-        gender: true,
-        activity: true,
-        age: true,
-        weight: true,
-        height: true,
-        
+				gender: true,
+				activity: true,
+				age: true,
+				weight: true,
+				height: true,
 			},
 		})) ?? null
 	);
