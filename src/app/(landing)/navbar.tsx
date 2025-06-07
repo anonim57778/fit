@@ -111,7 +111,7 @@ function MobileNavbar({
             </SheetTrigger>
             <SheetContent className="flex gap-4 flex-col">
                 <SheetHeader className="flex flex-row justify-between">
-                    <h1 className="text-2xl font-bold text-primary">FITLOG</h1>
+                    <Link href={"/"} className="text-2xl font-bold text-primary">FITLOG</Link>
                 </SheetHeader>
                 <div className="grow flex flex-col gap-6 items-center">
                     {navbarItems.map((item, index) => (
@@ -147,9 +147,7 @@ export default function Navbar() {
     return (
         <header className="shadow-md">
             <div className="flex justify-between items-center py-[18.5px] container">
-                <Link href="/">
-                    <h1 className="text-2xl font-bold text-primary">FITLOG</h1>
-                </Link>
+                <Link href="/" className="text-2xl font-bold text-primary">FITLOG</Link>
 
                 <div className="hidden lg:flex gap-6">
                     {navbarItems.map((item, index) => (

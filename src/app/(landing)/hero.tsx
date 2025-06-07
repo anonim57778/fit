@@ -39,7 +39,7 @@ export default function Hero() {
 
                 <p className="text-base text-accent/60 font-normal text-center">FitLog помогает вам легко записывать и отслеживать ваши тренировки. Кроме того, приложение учитывает и анализирует ваше питание, позволяя вам управлять своим здоровьем комплексно. Начните вести учет своих достижений и питания сегодня.</p>
 
-                <Link href="/login">
+                <Link href="/dashboard">
                     <Button>
                         Вход на платформу
                     </Button>

@@ -71,6 +71,40 @@ export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
 }));
 
+export const workouts = createTable("workouts", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: varchar("name", { length: 255 }).notNull(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+})
+
+export const workoutsRelations = relations(workouts, ({ many, one }) => ({
+  user: one(users, { fields: [workouts.userId], references: [users.id] }),
+  exercises: many(workoutsExercises),
+}))
+
+export const workoutsExercises = createTable("workouts_exercises", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: varchar("name", { length: 255 }).notNull(),
+  setRepeatWeight: varchar("set_repeat_weight").notNull(),
+  workoutId: varchar("workout_id").references(() => workouts.id).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+})
+
+export const workoutsExercisesRelations = relations(workoutsExercises, ({ one }) => ({
+  workout: one(workouts, { fields: [workoutsExercises.workoutId], references: [workouts.id] }),
+}))
+
 export const accounts = createTable(
   "account",
   {
