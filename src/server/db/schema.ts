@@ -105,6 +105,32 @@ export const workoutsExercisesRelations = relations(workoutsExercises, ({ one })
   workout: one(workouts, { fields: [workoutsExercises.workoutId], references: [workouts.id] }),
 }))
 
+export const mealEnum = pgEnum("meal_enum", ["BREAKFAST", "LUNCH", "DINNER", "SNACK"]);
+export const MealSchema = z.enum(mealEnum.enumValues);
+export type Meal = z.infer<typeof MealSchema>;
+
+export const foods = createTable("foods", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: varchar("name", { length: 255 }).notNull(),
+  fats: integer("fats").notNull(),
+  сarbohydrates: integer("сarbohydrates").notNull(),
+  squirrels: integer("squirrels").notNull(),
+  calories: integer("calories").notNull(),
+  grams: integer("grams").notNull(),
+  meal: mealEnum("meal").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+})
+
+export const foodsRelations = relations(foods, ({ one }) => ({
+  user: one(users, { fields: [foods.userId], references: [users.id] }),
+}))
+
 export const accounts = createTable(
   "account",
   {

@@ -1,4 +1,4 @@
-import { ActivityUser, GenderUser } from "~/server/db/schema";
+import { ActivityUser, GenderUser, Meal } from "~/server/db/schema";
 
 
 export function genederToString(item: GenderUser) {
@@ -18,5 +18,18 @@ export function activityToString(item: ActivityUser) {
             return "Средняя активность";
         case "HIGH":
             return "Высокая активность";
+    }
+}
+
+export function mealToString(item: Meal) {
+    switch (item) {
+        case "BREAKFAST":
+            return "Завтрак";
+        case "LUNCH":
+            return "Обед";
+        case "DINNER":
+            return "Ужин";
+        case "SNACK":
+            return "Перекус";
     }
 }
