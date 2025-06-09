@@ -22,7 +22,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${main_font.variable} font-main`}>
+    <html lang="ru" className={`${main_font.variable} font-main`}>
       <body>
         <TRPCReactProvider>
           {children}
