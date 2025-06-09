@@ -2,7 +2,7 @@
 import { FormControl, FormField, FormItem, FormLabel } from "~/components/ui/form";
 import { type Control } from "react-hook-form";
 import { RegisterSchema } from "~/lib/shared/types/user";
-import { z } from "zod";
+import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import diary from "../../../public/images/diary.svg";
 import analytics from "../../../public/images/analytics.svg";
 import control from "../../../public/images/control.svg";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "~/components/ui/carousel";
 
 type functionalT = {
@@ -13,15 +13,15 @@ type functionalT = {
 const functionals: functionalT[] = [
     {
         name: "Ведение дневника тренировок",
-        icon: <Image src={diary} alt="diary"/>
+        icon: <Image src={diary as string} alt="diary"/>
     },
     {
         name: "Аналитика и прогресс",
-        icon: <Image src={analytics} alt="analytics"/>
+        icon: <Image src={analytics as string} alt="analytics"/>
     },
     {
         name: "Контроль вашего питания",
-        icon: <Image src={control} alt="control"/>
+        icon: <Image src={control as string} alt="control"/>
     },
 ]
 

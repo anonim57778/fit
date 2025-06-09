@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LoginSchema } from "~/lib/shared/types/user";
-import { z } from "zod";
+import { type z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { OnError } from "~/lib/client/on-error";

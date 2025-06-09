@@ -3,7 +3,6 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { workouts, workoutsExercises } from "~/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import { IdSchema } from "~/lib/shared/types/utils";
-import { create } from "domain";
 
 
 export const workoutRouter = createTRPCRouter({
@@ -11,12 +10,12 @@ export const workoutRouter = createTRPCRouter({
         .input(WorkoutSchema)
         .mutation(async ({ ctx, input }) => {
             await ctx.db.transaction(async (trx) => {
-                const [workout] = await ctx.db.insert(workouts).values({
+                const [workout] = await trx.insert(workouts).values({
                     ...input,
                     userId: ctx.session.user.id,
                 }).returning()
 
-                await ctx.db.insert(workoutsExercises).values(
+                await trx.insert(workoutsExercises).values(
                     input.exercises.map((item) => ({
                         ...item,
                         workoutId: workout!.id,

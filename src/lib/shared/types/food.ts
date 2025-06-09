@@ -1,6 +1,6 @@
-import { inferProcedureOutput } from "@trpc/server";
+import { type inferProcedureOutput } from "@trpc/server";
 import { z } from "zod";
-import { AppRouter } from "~/server/api/root";
+import { type AppRouter } from "~/server/api/root";
 import { mealEnum } from "~/server/db/schema";
 
 

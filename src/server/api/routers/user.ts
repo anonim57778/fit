@@ -16,15 +16,14 @@ export const userRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const passwordHash = await bcrypt.hash(input.password, 10);
             await ctx.db.insert(users).values({
-                name: input.name,
-                gender: input.gender,
-                activity: input.activity,
-                age: input.age,
-                weight: input.weight,
-                height: input.height,
-                email: input.email,
+                ...input,
                 password: passwordHash,
                 role: input.email == env.MAIN_ADMIN_EMAIL ? "ADMIN" : "USER",
             })
+
+            return {
+                email: input.email,
+                password: input.password,
+            }
         }),
 })

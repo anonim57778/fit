@@ -39,7 +39,7 @@ export default function About() {
 
             <div className="flex justify-between items-center flex-col lg:flex-row gap-10">
                 <Image
-                    src={aboutImage}
+                    src={aboutImage as string}
                     alt="about"
                 />
 

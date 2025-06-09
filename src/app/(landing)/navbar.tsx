@@ -1,7 +1,6 @@
 "use client";
 import { Menu } from "lucide-react";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
+import { type Session } from "next-auth";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -171,7 +170,7 @@ export default function Navbar() {
                     )}
                 </div>
 
-                <MobileNavbar session={session?.session!} />
+                {session?.session && <MobileNavbar session={session.session} />}
             </div>
         </header>
     )

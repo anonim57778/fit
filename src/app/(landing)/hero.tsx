@@ -13,21 +13,21 @@ export default function Hero() {
         <section className="flex items-center flex-col gap-10 py-16 container lg:py-20 min-h-screen">
             <div className="hidden lg:flex justify-between items-end gap-4">
                 <Image
-                    src={imageHero1}
+                    src={imageHero1 as string}
                     alt="hero"
                     width={407}
                     height={467}
                 />
 
                 <Image
-                    src={imageHero2}
+                    src={imageHero2 as string}
                     alt="hero"
                     width={298}
                     height={483}
                 />
 
                 <Image
-                    src={imageHero3}
+                    src={imageHero3 as string}
                     alt="hero"
                     width={480}
                     height={415}
@@ -47,7 +47,7 @@ export default function Hero() {
             </div>
 
             <Image 
-                src={mobileImageHero}
+                src={mobileImageHero as string}
                 alt="hero"
                 width={1000}
                 height={1000}

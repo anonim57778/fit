@@ -1,5 +1,5 @@
 import { ScanFace, ChartSpline, Eye, Waves } from "lucide-react";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 
 type advantegesT = {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Control } from "react-hook-form";
-import { z } from "zod";
+import { type Control } from "react-hook-form";
+import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import {
   FormControl,

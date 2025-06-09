@@ -4,6 +4,7 @@ import Functional from "./functional";
 import Hero from "./hero";
 import Reviews from "./reviews";
 
+export const dynamic = "force-dynamic";
 
 export default function Home() {
 

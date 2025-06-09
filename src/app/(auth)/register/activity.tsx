@@ -2,7 +2,7 @@
 import { FormField, FormItem, FormLabel } from "~/components/ui/form";
 import { type Control } from "react-hook-form";
 import { RegisterSchema } from "~/lib/shared/types/user";
-import { z } from "zod";
+import { type z } from "zod";
 import { SelectUi, SelectUiItem } from "~/components/select";
 import { activityUserEnum } from "~/server/db/schema";
 import { activityToString } from "~/lib/enums";

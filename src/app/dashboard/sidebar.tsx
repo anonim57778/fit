@@ -1,7 +1,7 @@
-import { getServerSession } from "next-auth";
-import { MobileSidebarItem, SidebarItem, sidebarT } from "./sidebar-item";
-import { Apple, BicepsFlexed, ChartSpline, WalletCards, UserRound } from "lucide-react"
+import { MobileSidebarItem, SidebarItem, type sidebarT } from "./sidebar-item";
+import { Apple, BicepsFlexed, ChartSpline, WalletCards } from "lucide-react"
 import Link from "next/link";
+import Profile from "./profile";
 
 const sidebarItems: sidebarT[] = [
     {
@@ -27,9 +27,7 @@ const sidebarItems: sidebarT[] = [
 ]
 
 
-export default async function Sidebar() {
-
-    const session = await getServerSession();
+export default function Sidebar() {
 
     return (
         <div>
@@ -42,13 +40,7 @@ export default async function Sidebar() {
                     ))}
                 </div>
 
-                <Link href={"/dashboard/profile"} className="flex flex-col items-center gap-2">
-                    <div className="size-12 rounded-full bg-muted flex items-center justify-center">
-                        <UserRound className="size-6 text-primary"/>
-                    </div>
-
-                    <h1 className="text-base text-accent font-semibold">{session?.user?.name}</h1>
-                </Link>
+                <Profile/>
             </div>
 
             <div className="fixed bottom-2 left-0 w-full flex justify-center lg:hidden">

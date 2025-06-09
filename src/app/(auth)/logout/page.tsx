@@ -7,21 +7,22 @@ import { api } from "~/trpc/react";
 
 export default function Page() {
 	const router = useRouter();
-
 	const utils = api.useUtils();
 
 	useEffect(() => {
-		signOut({
-			redirect: true,
-		}).then(() => {
-			utils.user.session.invalidate();
-			router.push("/");
-		});
-	}, []);
+		void signOut({ redirect: true })
+			.then(() => {
+				void utils.user.session.invalidate();
+				router.push("/");
+			})
+			.catch((error) => {
+				console.error("Ошибка при выходе из системы:", error);
+			});
+	}, [router, utils.user.session]);
 
 	return (
 		<div className="h-screen w-screen flex items-center justify-center">
-            <h1>Выходим...</h1>
-        </div>
+			<h1>Выходим...</h1>
+		</div>
 	);
 }

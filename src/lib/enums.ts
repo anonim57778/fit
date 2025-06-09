@@ -1,4 +1,4 @@
-import { ActivityUser, GenderUser, Meal } from "~/server/db/schema";
+import { type ActivityUser, type GenderUser, type Meal } from "~/server/db/schema";
 
 
 export function genederToString(item: GenderUser) {

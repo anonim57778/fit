@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import person1 from "../../../public/images/person1.svg";
 import person2 from "../../../public/images/person2.svg";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "~/components/ui/carousel";
 
 
@@ -18,13 +18,13 @@ const reviews: reviewsT[] = [
         name: "Игорь Соловьев",
         job: "Офисный сотрудник",
         comment: "С FitLog я наконец-то смог упорядочить свои тренировки и следить за питанием. Очень удобное приложение",
-        image: <Image src={person1} alt="person1" className="size-16 rounded-full object-cover"/>
+        image: <Image src={person1 as string} alt="person1" className="size-16 rounded-full object-cover"/>
     },
     {
         name: "Анна Крылова",
         job: "Любитель бега",
         comment: "Полностью изменила мой подход к тренировкам. Теперь я вижу свой прогресс и могу корректировать питание для лучших результатов",
-        image: <Image src={person2} alt="person2" className="size-16 rounded-full object-cover"/>
+        image: <Image src={person2 as string} alt="person2" className="size-16 rounded-full object-cover"/>
     },
 ];
 
