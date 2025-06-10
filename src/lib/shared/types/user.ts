@@ -45,3 +45,20 @@ export const RegisterSchema = z.object({
         })
     }
 });
+
+export const UpdateSchema = z.object({
+    name: z.string({
+        message: "Имя обязательно"
+    }).min(1, "Имя должно быть длиной не менее 1 символа").max(255, "Имя должно быть длиной не более 255 символов"),
+    gender: z.enum(genderUserEnum.enumValues),
+    activity: z.enum(activityUserEnum.enumValues),
+    age: z.coerce.number({
+        message: "Возраст обязателен"
+    }).positive("Возраст должен быть положительным"),
+    weight: z.coerce.number({
+        message: "Вес обязателен"
+    }).positive("Вес должен быть положительным"),
+    height: z.coerce.number({
+        message: "Рост обязателен"
+    }).positive("Рост должен быть положительным"),
+})

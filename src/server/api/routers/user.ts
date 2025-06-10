@@ -1,8 +1,9 @@
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { users } from "~/server/db/schema";
 import { env } from "~/env";
 import bcrypt from "bcrypt";
-import { RegisterSchema } from "~/lib/shared/types/user";
+import { RegisterSchema, UpdateSchema } from "~/lib/shared/types/user";
+import { eq } from "drizzle-orm";
 
 export const userRouter = createTRPCRouter({
     session: publicProcedure.query(async ({ ctx }) => {
@@ -25,5 +26,10 @@ export const userRouter = createTRPCRouter({
                 email: input.email,
                 password: input.password,
             }
+        }),
+    update: protectedProcedure
+        .input(UpdateSchema)
+        .mutation(async ({ ctx, input }) => {
+            await ctx.db.update(users).set(input).where(eq(users.id, ctx.session.user.id))
         }),
 })

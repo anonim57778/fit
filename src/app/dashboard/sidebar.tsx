@@ -1,6 +1,8 @@
+import { getServerSession } from "next-auth";
 import { MobileSidebarItem, SidebarItem, type sidebarT } from "./sidebar-item";
-import { Apple, BicepsFlexed, ChartSpline, WalletCards } from "lucide-react"
+import { Apple, BicepsFlexed, ChartSpline, UserRound, WalletCards } from "lucide-react"
 import Link from "next/link";
+import { cn } from "~/lib/utils";
 import Profile from "./profile";
 
 const sidebarItems: sidebarT[] = [
@@ -26,6 +28,12 @@ const sidebarItems: sidebarT[] = [
     },
 ]
 
+const profileItem: sidebarT = {
+    name: "Профиль",
+    href: "/dashboard/profile",
+    icon: <UserRound className="size-6"/>,
+}
+
 
 export default function Sidebar() {
 
@@ -48,6 +56,8 @@ export default function Sidebar() {
                     {sidebarItems.map((item, index) => (
                         <MobileSidebarItem key={index} item={item} />
                     ))}
+
+                    <MobileSidebarItem item={profileItem}/>
                 </div>
             </div>
         </div>
