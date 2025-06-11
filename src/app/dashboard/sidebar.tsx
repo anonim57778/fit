@@ -51,7 +51,7 @@ export default function Sidebar() {
                 <Profile/>
             </div>
 
-            <div className="fixed bottom-2 left-0 w-full flex justify-center lg:hidden">
+            <div className="fixed z-50 bottom-2 left-0 w-full flex justify-center lg:hidden">
                 <div className="rounded-full bg-white w-fit p-1 flex gap-3 border border-muted">
                     {sidebarItems.map((item, index) => (
                         <MobileSidebarItem key={index} item={item} />

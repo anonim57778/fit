@@ -3,7 +3,7 @@ import { Input } from "~/components/ui/input";
 import { FormLabel, FormItem } from "~/components/ui/form";
 
 
-function getDiet(session: Session) {
+export function getDiet(session: Session) {
     const {age, weight, height, activity, gender} = session.user;
 
     let calories = 10 * weight + 6.25 * height - 5 * age + 75 + (gender === "MALE" ? 5 : -161);
