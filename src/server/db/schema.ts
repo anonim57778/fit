@@ -1,5 +1,7 @@
+import { addDays } from "date-fns";
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   index,
   integer,
   pgEnum,
@@ -46,6 +48,10 @@ export const activityUserEnum = pgEnum("activity_user_enum", ["LIGHT", "AVERAGE"
 export const ActivityUserSchema = z.enum(activityUserEnum.enumValues);
 export type ActivityUser = z.infer<typeof ActivityUserSchema>;
 
+export const pricingTypeEnum = pgEnum("pricing_type_enum", ["FREE", "WEEKLY", "MONTHLY"]);
+export const PricingTypeSchema = z.enum(pricingTypeEnum.enumValues);
+export type PricingType = z.infer<typeof PricingTypeSchema>;
+
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
     .notNull()
@@ -64,6 +70,11 @@ export const users = createTable("user", {
     mode: "date",
     withTimezone: true,
   }).defaultNow(),
+  activePricing: pricingTypeEnum("active_pricing").notNull().default("FREE"),
+  pricingExpiresAt: timestamp("pricing_expires_at", {
+    mode: "date",
+    withTimezone: true,
+  }).notNull().default(addDays(new Date(), 3)),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -129,6 +140,33 @@ export const foods = createTable("foods", {
 export const foodsRelations = relations(foods, ({ one }) => ({
   user: one(users, { fields: [foods.userId], references: [users.id] }),
 }))
+
+export const statusesEnum = pgEnum("statuses_enum", ["PENDING", "WAITING", "SUCCESS", "CANCEL"]);
+export const StatusesSchema = z.enum(statusesEnum.enumValues);
+export type Status = z.infer<typeof StatusesSchema>;
+
+export const payments = createTable("payments", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  idempotencyKey: text("idempotency_key").notNull().unique(),
+  yookassaId: text("yookassa_id").notNull().unique(),
+  confirmationUrl: text("confirmation_url").notNull(),
+  status: statusesEnum("status").notNull().default("PENDING"),
+  pricingType: pricingTypeEnum("pricing_type").notNull(),
+  amount: integer("amount").notNull(),
+  incomeAmount: integer("income_amount"),
+  isPaid: boolean("is_paid").notNull().default(false),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const paymentsRelations = relations(payments, ({ one }) => ({
+  user: one(users, {fields: [payments.userId], references: [users.id]}),
+}));
 
 export const accounts = createTable(
   "account",

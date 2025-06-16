@@ -11,7 +11,6 @@ export const userRouter = createTRPCRouter({
 			session: ctx.session,
 		};
 	}),
-    //Регистрация пользователя
     register: publicProcedure
         .input(RegisterSchema)
         .mutation(async ({ ctx, input }) => {

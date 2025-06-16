@@ -9,6 +9,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "~/env";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
+import { isAfter } from "date-fns";
 
 declare module "next-auth" {
 	interface Session extends DefaultSession {
@@ -18,23 +19,33 @@ declare module "next-auth" {
 }
 
 async function GetUser(data: { email: string }) {
-	return (
-		(await db.query.users.findFirst({
-			where: eq(users.email, data.email),
-			columns: {
-				id: true,
-				email: true,
-				name: true,
-				password: true,
-				role: true,
-				gender: true,
-				activity: true,
-				age: true,
-				weight: true,
-				height: true,
-			},
-		})) ?? null
-	);
+	const res = await db.query.users.findFirst({
+		where: eq(users.email, data.email),
+		columns: {
+			id: true,
+			email: true,
+			name: true,
+			password: true,
+			role: true,
+			gender: true,
+			activity: true,
+			age: true,
+			weight: true,
+			height: true,
+			activePricing: true,
+			pricingExpiresAt: true,
+		},
+	});
+
+	if (!res) return null;
+
+	const isPricingActive = isAfter(res.pricingExpiresAt, new Date());
+
+	return {
+		...res,
+		activePricing: isPricingActive ? res.activePricing : "FREE",
+		isPricingActive,
+	}
 }
 
 export const authOptions: NextAuthOptions = {
